@@ -138,7 +138,47 @@ Reference link : [https://www.edureka.co/blog/join-method-java]
 - But, if multiple thread is working then one thread update will not be avaialable for the another thread as cache is thread specific.
 - In this case we have to implement the propert synchronization and atomicity to avoid this behaviour of the Threads.
 
+### 12. Whats is starvation and livelock ? 
+#### <ins> Starvation </ins> :
+- When there are multiple threads are running parallely and some are lower priority thread and some are the higher priority threads. And they are sharing the common resources amongest the all threds.
+- But as due to the higher priority threads are getting an chance to run first and it will be executing the critical section of the code which is in the synch block and due to the higher priority thread taken an lock on it lower priority thread is not getting an chance to run.
+- Also synch block is taking an too much time to execute and higher priority thread is executing the critical section of the code frequently due to this lower priority of the thread is not getting an chance to execute/process.
+- This is called as starvation. which can be due to the im proper resource allowcation.
 
+#### <ins> LiveLock </ins> :
+- Live lock is an similar to the deadlock. In the dead lock the threads are waiting on each other to release the lock. But in the case of the livelock the both thread 1 and thread 2 are doing the same action recurcuvelly which is due to the threads are not getting chance to execute.
+- In this case like dead lock threads are not in the blocking state they are running but taking same action.
+- Liek an e.g of walking of the mens in corridor from the opposite side of each other and they are going left and right at the same time to give an chance to proceed another one. which is happening same with the threads they are giving an chance to run at the same time by releasing an lock.
+
+### 13. Countdownlatch and cyclicBarrier in Thread 
+This are the patterns based on which we can wait the maiin thread till the task which is provided to the other threads completed.
+#### <ins> Countdownlatch </ins> :
+- In this case we are creating the count down latch by mentioning of the number of task which are goiing to executed in the thread. And we are passing this latch to the every thread. And keeps the main thread await.
+```
+CountDownLatch latch = new CountDownLatch(1);
+            latch.await(); //  keeps main thread await
+            latch.countDown(); // pass this to the every thread and down the latch once done 
+```
+- So once the every thread completes their operation then it will be down the latch and once the latch is reaches to the zero it means that the all task has been completed and main thread can proceed to the execution.
+
+#### <ins> CyclicBarrier </ins> :
+- This is the same as the count down latch it actuall wait the thread till all threads are complete theier operations.
+- Like here it will create the cyclic barrier with the number of threads which are executing and then pass this to the every thread.
+- And every thread will call the await method once it complete it execution.
+- And when the await count of the thread is matches with the count provided in the cyclic barrier then it will be continue the main thread operation.
+
+```
+CyclicBarrier barrier = new CyclicBarrier(10);
+            barrier.await();
+```
+
+### 14. How many threads should be created ?  how to decide this ?
+- This can be decided by the different factors :
+1. Based on the applications architecture. Thanks how many threads your application is required to process this specific task i the parllel.
+2. Based on the CPU core. like whatever the resources and core are avaiable for your system where the application is rnning.
+3. There are some limitations on the os as well that you can create that many threads at the time.
+4. There are other limitations as well that suppose we have the thread pool with the 200 threads to make the connection to the data base but the data base connections are limit of 100 parrlel session at the same time.
+5. So there are couple of the resources limit which we should be take in mind also other limitation can be vary based on the senarios and application architecture.
 
 
 
